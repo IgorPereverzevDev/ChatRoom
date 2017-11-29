@@ -19,6 +19,10 @@ public class Server extends AbstractActor {
     private ActorRef tcpActor;
     Map<String, Client> joinedClient = new HashMap<>();
 
+    public Server(ActorRef tcpActor) {
+        this.tcpActor = tcpActor;
+    }
+
 
     public static Props props(ActorRef tcpActor) {
         return Props.create(Server.class, tcpActor);

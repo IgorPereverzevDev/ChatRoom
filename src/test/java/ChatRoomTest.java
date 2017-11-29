@@ -32,11 +32,9 @@ public class ChatRoomTest extends TestCase {
         new TestKit(system) {
             {
                 //Given a ChatRoom has no users
-                final Props propsServer = Props.create(Server.class);
-                final Props propsClient = Props.create(Client.class);
-
-                final ActorRef refServer = system.actorOf(propsServer);
-                final ActorRef refClient = system.actorOf(propsClient);
+                ActorRef refServer = system.actorOf(Server.props(null), "server");
+                ActorRef refClient = system.actorOf(Client.props(new InetSocketAddress("localhost", 8080),
+                        null, "1"));
 
                 final String room1 = "1";
                 final String room2 = "2";
@@ -62,11 +60,9 @@ public class ChatRoomTest extends TestCase {
     public void testShouldRemoveFromUsersWhenDisJoiningTest() {
         new TestKit(system) {
             {
-                final Props propsServer = Props.create(Server.class);
-                final Props propsClient = Props.create(Client.class);
-
-                final ActorRef refServer = system.actorOf(propsServer);
-                final ActorRef refClient = system.actorOf(propsClient);
+                ActorRef refServer = system.actorOf(Server.props(null), "server");
+                ActorRef refClient = system.actorOf(Client.props(new InetSocketAddress("localhost", 8080),
+                        null, "1"));
 
                 final String room = "1";
 
@@ -91,11 +87,9 @@ public class ChatRoomTest extends TestCase {
         new TestKit(system) {
             {
                 //Given
-                final Props propsRoom = Props.create(Room.class);
-                final Props propsClient = Props.create(Client.class);
-
-                final ActorRef refRoom = system.actorOf(propsRoom);
-                final ActorRef refClient = system.actorOf(propsClient);
+                ActorRef refRoom = system.actorOf(Room.props(null), "1");
+                ActorRef refClient = system.actorOf(Client.props(new InetSocketAddress("localhost", 8080),
+                        null, "1"));
 
                 //When it receives a request from a client to disJoin the chatRoom
                 Client client = new Client(new InetSocketAddress("localhost", 8080),
@@ -122,10 +116,9 @@ public class ChatRoomTest extends TestCase {
     public void testShouldAddMessageToRoomWhenPublishToChatMessageTest() {
         new TestKit(system) {{
             //Given a ChatRoom has no users
-            final Props propsClient = Props.create(Client.class);
-            final Props propsRoom = Props.create(Room.class);
-            final ActorRef refClient = system.actorOf(propsClient);
-            final ActorRef refRoom = system.actorOf(propsRoom);
+            ActorRef refRoom = system.actorOf(Room.props(null), "1");
+            ActorRef refClient = system.actorOf(Client.props(new InetSocketAddress("localhost", 8080),
+                    null, "1"));
             final String room = "1";
             Messages message = new Messages();
 

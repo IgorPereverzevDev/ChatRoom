@@ -17,7 +17,7 @@ class Room extends AbstractActor {
 
     private LoggingAdapter log = Logging.getLogger(getContext().system(), this);
 
-    final String id;
+    private String id;
     private final int maxNumberOfMessages = 128;
     private ActorRef tcpActor;
     CircularFifoQueue<Messages.PublishToChatRoom> chatHistory = new CircularFifoQueue<>(maxNumberOfMessages);
@@ -26,6 +26,11 @@ class Room extends AbstractActor {
         this.id = id;
 
     }
+
+    public Room(ActorRef tcpActor) {
+        this.tcpActor = tcpActor;
+    }
+
     static Props props(String id) {
         // the actual type of the returned actor
         return Props.create(Room.class, () -> new Room(id));
