@@ -17,11 +17,6 @@ public class Client extends AbstractActor {
     private LoggingAdapter log = Logging.getLogger(getContext().system(), this);
 
     private String username;
-
-    public Client(ActorRef tcpActor) {
-        this.tcpActor = tcpActor;
-    }
-
     private ActorRef tcpActor;
     private InetSocketAddress remote;
     List<Client> subscribeClientsToRoom = new ArrayList<>();
