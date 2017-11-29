@@ -1,6 +1,5 @@
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
-
 import java.net.InetSocketAddress;
 
 /**
@@ -21,7 +20,7 @@ public class Runner {
             ActorRef refClient = clientActorSystem.actorOf(Client.props(new InetSocketAddress("localhost", 8080),
                     null, args[i]));
             ActorRef refRoom = roomActorSystem.actorOf(Room.props(null), args[i]);
-            //tell to server
+            //tell
             refClient.tell(Messages.PublishToChatRoom.class, ActorRef.noSender());
             refRoom.tell(Messages.newClientInRoom.class, ActorRef.noSender());
         }
